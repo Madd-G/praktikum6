@@ -25,31 +25,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void register() async {
-    if (_registerFormKey.currentState!.validate()) {
-      try {
-        await _auth.createUserWithEmailAndPassword(
-            email: emailController.text, password: passController.text);
-        if (context.mounted) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-              (route) => false);
-        }
-      } on FirebaseAuthException catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 1),
-            content: Text(
-              e.toString(),
-            ),
-          ),
-        );
+    try {
+      await _auth.createUserWithEmailAndPassword(
+          email: emailController.text, password: passController.text);
+      if (context.mounted) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            (route) => false);
       }
-    } else {
+    } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Fill out the entire form'),
-          duration: Duration(milliseconds: 1000),
+        SnackBar(
+          duration: const Duration(seconds: 1),
+          content: Text(
+            e.toString(),
+          ),
         ),
       );
     }
@@ -106,7 +97,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 15.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      register();
+                      if (_registerFormKey.currentState!.validate()) {
+                        register();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Fill out the entire form'),
+                            duration: Duration(seconds: 1),
+                          ),
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff3D4DE0),

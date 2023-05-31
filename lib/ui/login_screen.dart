@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:praktikum6/ui/home_screen.dart';
 import 'package:praktikum6/ui/register_screen.dart';
 
@@ -24,32 +25,37 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() async {
-    if (_loginFormKey.currentState!.validate()) {
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: emailController.text, password: passController.text);
-        if (context.mounted) {
-          await Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-              (route) => false);
-        }
-      } on FirebaseAuthException catch (e) {
-        SnackBar(
-          duration: const Duration(seconds: 1),
-          content: Text(
-            e.toString(),
-          ),
-        );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passController.text);
+      if (context.mounted) {
+        await Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            (route) => false);
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Fill out the entire form'),
-          duration: Duration(milliseconds: 1000),
+    } on FirebaseAuthException catch (e) {
+      SnackBar(
+        duration: const Duration(seconds: 1),
+        content: Text(
+          e.toString(),
         ),
       );
     }
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: gAuth.accessToken,
+      idToken: gAuth.idToken,
+    );
+    return await FirebaseAuth.instance.signInWithCredential(credential).then(
+        (value) async => await Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            (route) => false));
   }
 
   @override
@@ -109,7 +115,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 15.0),
                   child: ElevatedButton(
                       onPressed: () {
-                        login();
+                        if (_loginFormKey.currentState!.validate()) {
+                          login();
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Fill out the entire form'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff3D4DE0),
@@ -122,6 +137,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: 24,
                             color: Colors.white),
                       )),
+                ),
+              ),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    signInWithGoogle();
+                  },
+                  child: const Text('Google'),
                 ),
               ),
               Row(
@@ -142,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Color(0xff3D4DE0)),
                       ))
                 ],
-              )
+              ),
             ],
           ),
         ),
