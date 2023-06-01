@@ -4,13 +4,14 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:praktikum6/ui/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key, this.user}) : super(key: key);
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
+  final User? user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Home Screen'),
       ),
       body: Center(

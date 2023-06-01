@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:praktikum6/ui/home_screen.dart';
+import 'package:praktikum6/ui/phone_login_screen.dart';
 import 'package:praktikum6/ui/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passController = TextEditingController();
+
   bool passInvisible = false;
 
   @override
@@ -140,11 +142,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Center(
-                child: TextButton(
-                  onPressed: () {
-                    signInWithGoogle();
-                  },
-                  child: const Text('Google'),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        signInWithGoogle();
+                      },
+                      child: const Text(
+                        'Google',
+                        style: TextStyle(color: Color(0xff3D4DE0)),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const PhoneLoginScreen()));
+                      },
+                      child: const Text('Phone',
+                          style: TextStyle(color: Color(0xff3D4DE0))),
+                    ),
+                  ],
                 ),
               ),
               Row(
