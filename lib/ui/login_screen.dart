@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void login() async {
+  void loginWithEmailPassword() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passController.text);
@@ -37,10 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
             (route) => false);
       }
     } on FirebaseAuthException catch (e) {
-      SnackBar(
-        duration: const Duration(seconds: 1),
-        content: Text(
-          e.toString(),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          duration: const Duration(seconds: 3),
         ),
       );
     }
@@ -116,29 +116,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 15.0),
                   child: ElevatedButton(
-                      onPressed: () {
-                        if (_loginFormKey.currentState!.validate()) {
-                          login();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Fill out the entire form'),
-                              duration: Duration(seconds: 1),
-                            ),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff3D4DE0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                            color: Colors.white),
-                      )),
+                    onPressed: () {
+                      loginWithEmailPassword();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xff3D4DE0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: Colors.white),
+                    ),
+                  ),
                 ),
               ),
               Center(

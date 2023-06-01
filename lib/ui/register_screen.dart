@@ -24,7 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  void register() async {
+  void registerWithEmailPassword() async {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: emailController.text, password: passController.text);
@@ -97,16 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 15.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_registerFormKey.currentState!.validate()) {
-                        register();
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Fill out the entire form'),
-                            duration: Duration(seconds: 1),
-                          ),
-                        );
-                      }
+                      registerWithEmailPassword();
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff3D4DE0),

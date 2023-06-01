@@ -21,7 +21,7 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
     super.dispose();
   }
 
-  loginUser(String phone, BuildContext context) async {
+  loginWithPhone(String phone, BuildContext context) async {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     auth.verifyPhoneNumber(
@@ -57,7 +57,7 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
             barrierDismissible: false,
             builder: (context) {
               return AlertDialog(
-                title: const Text("Give the code?"),
+                title: const Text("Masukkan code"),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -122,7 +122,7 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
                       borderSide: BorderSide(color: Colors.grey)),
                   filled: true,
                   fillColor: Colors.grey[100],
-                  hintText: "Mobile Number Start with +62"),
+                  hintText: "+62"),
               controller: _phoneController,
             ),
             const SizedBox(
@@ -133,7 +133,7 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   final phone = _phoneController.text.trim();
-                  loginUser(phone, context);
+                  loginWithPhone(phone, context);
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff3D4DE0),
