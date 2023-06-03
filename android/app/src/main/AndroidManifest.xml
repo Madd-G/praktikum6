@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.praktikum6">
+    package="com.example.praktikum6_auth">
    <application
-        android:label="praktikum6"
+        android:label="praktikum6_auth"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

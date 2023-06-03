@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/praktikum6.iml" filepath="$PROJECT_DIR$/praktikum6.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/praktikum6_android.iml" filepath="$PROJECT_DIR$/android/praktikum6_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/praktikum6_auth.iml" filepath="$PROJECT_DIR$/praktikum6_auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/praktikum6_auth_android.iml" filepath="$PROJECT_DIR$/android/praktikum6_auth_android.iml" />
     </modules>
   </component>
 </project>

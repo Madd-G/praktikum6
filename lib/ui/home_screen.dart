@@ -1,33 +1,38 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:praktikum6/ui/login_screen.dart';
+import 'login.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key, this.user}) : super(key: key);
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final User? user;
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Home Screen'),
-      ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            _googleSignIn.disconnect();
-            FirebaseAuth.instance
-                .signOut()
-                .then((value) => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                    (route) => false));
-          },
-          child: const Text('Keluar'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "HOME SCREEN",
+              style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff3D4DE0)),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                FirebaseAuth.instance
+                    .signOut()
+                    .then((value) => Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                        (route) => false));
+              },
+              child: const Text('Keluar'),
+            ),
+          ],
         ),
       ),
     );

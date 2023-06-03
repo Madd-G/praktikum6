@@ -17,13 +17,19 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -46,29 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB8uBlUHs40meZPn9i-YqHHUkcgJUTAzvA',
-    appId: '1:669597302669:web:5f4b699f5d2e0d69f847c4',
-    messagingSenderId: '669597302669',
-    projectId: 'praktikum19102190',
-    authDomain: 'praktikum19102190.firebaseapp.com',
-    storageBucket: 'praktikum19102190.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBstr3TiznfvdKJ_F4v58BaK3SAZsrT18Y',
-    appId: '1:669597302669:android:1b2cb3b8e556af2af847c4',
-    messagingSenderId: '669597302669',
-    projectId: 'praktikum19102190',
-    storageBucket: 'praktikum19102190.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAVAQV0aYt32IsRHdxc93CbxOOYSgsKZOU',
-    appId: '1:669597302669:ios:dc9d8c30b1ca8e7ef847c4',
-    messagingSenderId: '669597302669',
-    projectId: 'praktikum19102190',
-    storageBucket: 'praktikum19102190.appspot.com',
-    iosBundleId: 'com.example.praktikum6',
+    apiKey: 'AIzaSyDy3Z1ddrQkQ8td7X1z4OVMg2a-3LbX9NM',
+    appId: '1:876374324948:android:8c04eb079cef8c21cfad41',
+    messagingSenderId: '876374324948',
+    projectId: 'praktikumauth',
+    storageBucket: 'praktikumauth.appspot.com',
   );
 }

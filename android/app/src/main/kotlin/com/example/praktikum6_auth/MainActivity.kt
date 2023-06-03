@@ -1,4 +1,4 @@
-package com.example.praktikum6
+package com.example.praktikum6_auth
 
 import io.flutter.embedding.android.FlutterActivity
 
